@@ -1,0 +1,13 @@
+spring:
+  application.name: ToDoApp
+  datasource:
+    url: jdbc:mysql://localhost:3306/todo
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      database-platform: org.hibernate.dialect.MySQLDialect
+      naming-strategy: org.hibernate.cfg.ImproveNamingStrategy
+      ddl-auto: update
+    show-sql: true
