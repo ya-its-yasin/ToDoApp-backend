@@ -3,6 +3,7 @@ package com.todo.home;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.model.User;
 import com.todo.service.UserService;
 
+@CrossOrigin("http://localhost:4200/") //port number of angular application
 @RestController
 public class UserController {
 
@@ -31,7 +33,7 @@ public class UserController {
 				return new ResponseEntity<>(" { \"body\" : \"Resgistration successfull\"} ", HttpStatus.OK);
 			}
 		}
-		return new ResponseEntity<>(" { \"body\" : \" " + result + " \"} ", HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>(" { \"body\" : \" " + result + " \"} ", HttpStatus.BAD_REQUEST);
 	} 
 	
 	@PostMapping("/login")

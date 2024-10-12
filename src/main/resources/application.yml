@@ -11,3 +11,21 @@ spring:
       naming-strategy: org.hibernate.cfg.ImproveNamingStrategy
       ddl-auto: update
     show-sql: true
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: yasin
+    AppName : TODO App
