@@ -1,6 +1,7 @@
 package com.todo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import com.todo.model.Task;
 @Service
 public interface TaskService {
 
-	String addTask(Task task);
+	int addTask(Task task);
 
 	List<Task> getTasks(int userId);
 
@@ -19,5 +20,7 @@ public interface TaskService {
 	String finishTask(int taskId);
 
 	List<CompletedTask> getCTasks(int userId);
+
+	Optional<Task> getTask(int userId, String desc);
 
 }

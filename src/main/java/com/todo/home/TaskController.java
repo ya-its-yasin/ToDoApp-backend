@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,22 +19,27 @@ import com.todo.model.CompletedTask;
 import com.todo.model.Task;
 import com.todo.service.TaskService;
 
+@CrossOrigin("http://localhost:4200/") //port number of angular application
 @RestController
 public class TaskController {
 
 	@Autowired
 	TaskService taskService;
 	
-	@PostMapping("/addTask")
+	@PostMapping(path = "/addTask", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addTask(@RequestBody Task task){
-		String result = "";
+		int taskId = 0;
 		if(task!=null) {
-			result = taskService.addTask(task);
-			if(result=="success") {
-				return new ResponseEntity<>(" { \"body\" : \"Task Added successfully\"} ", HttpStatus.OK);
+			taskId = taskService.addTask(task);
+			if(taskId!=0) {
+				return new ResponseEntity<>(" { "
+						+ " \"body\" :"
+						+ " { \"Message\" : \"Task added successfull\" ,"
+						+ "  \"taskId\" : " + taskId + " }"
+						+ "  } ", HttpStatus.OK);
 			}
 		}
-		return new ResponseEntity<>(" { \"body\" : \" " + result + " \"} ", HttpStatus.EXPECTATION_FAILED);
+		return new ResponseEntity<>(" { \"body\" : \" Expectation Failed \"} ", HttpStatus.EXPECTATION_FAILED);
 	}
 	
 	@GetMapping("/getTasks/{userId}")

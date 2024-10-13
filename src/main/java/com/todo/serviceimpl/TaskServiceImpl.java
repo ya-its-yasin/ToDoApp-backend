@@ -30,18 +30,25 @@ public class TaskServiceImpl implements TaskService{
 	CompletedTaskRepo completedTaskRepo;
 	
 	@Override
-	public String addTask(Task task) {
+	public int addTask(Task task) {
 		Optional<User> validUser = userRepo.findById(task.getCreatedBy());
 		if(validUser.isPresent()) {
 			Task newTask = new Task(task.getDescription(), task.getCreatedBy(), "active");
 			try{
 				taskRepo.save(newTask);
-				return "success";
+				task = getTask(task.getCreatedBy(), task.getDescription()).get();
+				return task.getTaskId();
 			}catch(DataIntegrityViolationException e) {
-				return "Task already present and active";
+				return 0;
 			}
 		}
-		return "User does not exist";
+		return 0;
+	}
+	
+	@Override
+	public Optional<Task> getTask(int userId, String desc) {
+		Optional<Task> task = taskRepo.findByUserIdAndDesc(userId, desc);
+		return task;
 	}
 
 	@Override

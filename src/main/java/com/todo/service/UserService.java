@@ -9,6 +9,6 @@ public interface UserService {
 
 	String createUser(User user);
 
-	boolean loginUser(User user);
+	int loginUser(User user);
 	
 }

@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean loginUser(User user) {
+	public int loginUser(User user) {
 		User validUser = userRepo.findByMailId(user.getMailId());
 		if(validUser!=null && validUser.getPassword().equals(user.getPassword())) {
-			return true;
+			return validUser.getUserId();
 		}
-		return false;
+		return 0;
 	}
 
 }
